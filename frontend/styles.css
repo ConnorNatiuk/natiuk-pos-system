@@ -1,0 +1,236 @@
+:root {
+    --app-bg: #f4f1ea;
+    --panel-bg: #eae6db;
+    --display-bg: #dfdad1;
+    --card-bg: #ffffff;
+    --text-main: #2b2b2b;
+    --text-muted: #666666;
+    --primary: #3b5998;
+    --accent-blue: #5bc0de;
+    --border-color: #d1cbc0;
+}
+
+body {
+    margin: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-main);
+    background-color: var(--app-bg);
+}
+
+.main-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 4fr 1fr;
+    height: 100vh;
+}
+
+/* Top Search Bar */
+.top-bar {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--panel-bg);
+    padding: 20px;
+    gap: 20px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.top-bar input {
+    flex: 1;
+    height: 50px;
+    padding: 0 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+    background-color: white;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    outline: none;
+}
+
+.top-bar input:focus {
+    border-color: #b8b0a2;
+}
+
+.top-bar button {
+    height: 50px;
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 600;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: background-color 0.15s;
+}
+
+.top-bar button:hover {
+    background-color: #f0ece1;
+}
+
+/* Central Display Area */
+.display-area {
+    grid-row: 2 / 3;
+    grid-column: 1 / 4;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding: 20px;
+    gap: 15px;
+    background-color: var(--display-bg);
+    overflow-y: auto;
+}
+
+/* Individual Receipt Card */
+.cart-item-card {
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
+}
+
+.item-info {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr 1fr;
+    place-items: center;
+    background-color: var(--card-bg);
+    min-height: 65px;
+    padding: 0 20px;
+}
+
+.item-info p {
+    font-size: 16px;
+    color: gray;
+}
+
+
+.item-text-group {
+    justify-self: start;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.item-info strong {
+    font-size: 17px;
+    color: var(--text-main);
+}
+
+.item-sku {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+/* Quantity Shifters */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #f7f5f0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    border: 1px solid #e2ded5;
+}
+
+.qty-btn {
+    width: 28px;
+    height: 28px;
+    background-color: var(--accent-blue);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+    color: white;
+    display: grid;
+    place-items: center;
+    transition: opacity 0.15s;
+}
+
+.qty-btn:hover {
+    opacity: 0.85;
+}
+
+.item-quantity {
+    font-weight: 600;
+    font-size: 15px;
+    min-width: 15px;
+    text-align: center;
+}
+
+/* Sidebar */
+.side-bar {
+    grid-row: 2 / 3;
+    background-color: var(--panel-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border-left: 1px solid var(--border-color);
+}
+
+#reset-button {
+    width: 100%;
+    height: 45px;
+    background-color: #ffffff;
+    color: #d9534f;
+    border: 1px solid #d9534f;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+#reset-button:hover {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* Bottom Totals Bar */
+.bottom-bar {
+    grid-column: 1 / -1;
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    padding: 20px;
+    background-color: var(--panel-bg);
+    border-top: 1px solid var(--border-color);
+}
+
+.bottom-bar h2, .bottom-bar h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--text-main);
+}
+
+.bottom-bar h1 {
+    font-size: 48px;
+    font-weight: 700;
+}
+
+.bottom-bar span {
+    font-family: monospace;
+    font-weight: 600;
+}
+
+.bottom-bar button {
+    width: 90%;
+    height: 4em;
+    background-color: #ffffff;
+    color: #89CFF0;
+    border: 1px solid #89CFF0;
+    border-radius: 6px;
+    font-size: 32px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.bottom-bar button:hover {
+    background-color: #89CFF0;
+    color: white;
+}
