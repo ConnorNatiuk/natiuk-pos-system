@@ -1,3 +1,6 @@
+import { searchProduct } from './handleSearch.js';
+import { setupQuantityControls } from './quantityControls.js';
+
 const API_URL = 'http://localhost:8080/api/products';
 
 
@@ -9,7 +12,6 @@ const subtotalDisplay = document.getElementById('subtotal-display');
 const taxDisplay = document.getElementById('tax-display');
 const totalDisplay = document.getElementById('total-display');
 
-const itemButtons = document.querySelectorAll('.item-btn');
 const resetButton = document.getElementById('reset-button');
 
 resetButton.addEventListener('click', resetAll);
@@ -48,8 +50,7 @@ const displayArea = document.querySelector('.display-area');
 
 // SEARCH BAR AND ITEM HANDLING
 function handleSearch() {
-    const typedName = searchInput.value.trim().toLowerCase();
-    const foundProduct = productDatabase.find(product => product.name === typedName);
+    const foundProduct = searchProduct(searchInput.value, productDatabase);
     if (foundProduct) {
         const itemCard = document.createElement('div');
         let itemQuantity = 1;
@@ -64,45 +65,15 @@ function handleSearch() {
                     <span class="item-quantity">${itemQuantity}</span>
                     <button class="qty-btn plus-btn">+</button>
                 </div>
-                <strong><span class="price-display">$${foundProduct.price}</span></strong>
+                <strong><span class="price-display">$${foundProduct.price.toFixed(2)}</span></strong>
             </div>
         `;
         displayArea.appendChild(itemCard);
         currentSubtotal += foundProduct.price * itemQuantity;
         updatesTotal();
-
-        const plusQuantityButton = itemCard.querySelector('.plus-btn');
-        const minusQuantityButton = itemCard.querySelector('.minus-btn');
-        const quantityDisplay = itemCard.querySelector('.item-quantity');
-        const priceDisplay = itemCard.querySelector('.price-display');
-        const voidButton = itemCard.querySelector('.void-button');
-
-        plusQuantityButton.addEventListener('click', function() {
-            itemQuantity++;
-            quantityDisplay.textContent = itemQuantity;
-            priceDisplay.textContent = `$${(foundProduct.price * itemQuantity).toFixed(2)}`;
-
-            currentSubtotal += foundProduct.price;
-            updatesTotal()
-        });
-
-        minusQuantityButton.addEventListener('click', function() {
-            if (itemQuantity > 1) {
-                itemQuantity--;
-                quantityDisplay.textContent = itemQuantity;
-                priceDisplay.textContent = `$${(foundProduct.price * itemQuantity).toFixed(2)}`;
-
-                currentSubtotal -= foundProduct.price;
-                updatesTotal()
-            }
-        });
-
-        voidButton.addEventListener('click', function() {
-            itemCard.remove();
-            currentSubtotal -= foundProduct.price * itemQuantity;
-            if (currentSubtotal < 0) {
-                currentSubtotal = 0;
-            }
+        
+        setupQuantityControls(itemCard, foundProduct, (priceDelta) => {
+            currentSubtotal = Math.max(0, currentSubtotal + priceDelta);
             updatesTotal();
         });
 
