@@ -1,7 +1,8 @@
 import { searchProduct } from './api/handleSearch.js';
 import { setupQuantityControls } from './components/quantityControls.js';
 
-const API_URL = 'http://localhost:8080/api/products';
+const PRODUCTS_URL = 'http://localhost:8080/api/products';
+const ORDERS_URL = 'http://localhost:8080/api/orders';
 
 let currentSubtotal = 0.00;
 let currentTax = 0.00;
@@ -20,7 +21,7 @@ let productDatabase = [];
 
 async function fetchProductsFromBackend() {
     try {
-        const response = await fetch(API_URL)
+        const response = await fetch(PRODUCTS_URL)
         if (!response.ok) {
             throw new Error(`Error! ${response.status}`);
         }
@@ -31,7 +32,7 @@ async function fetchProductsFromBackend() {
             id: product.id,
             sku: product.sku,
             name: product.name.toLowerCase(),
-            displayName: product.displayname,
+            displayName: product.displayName,
             price: Number(product.price),
             quantity: product.quantity,
         }));
@@ -104,9 +105,33 @@ searchButton.addEventListener('click', handleSearch);
 
 const checkoutButton = document.getElementById('checkout-button');
 
-checkoutButton.addEventListener('click', function() {
-    resetAll();
-})
+checkoutButton.addEventListener('click', async function() {
+    try {
+        const ordersPayload = {
+            customerId: 1,
+            totalAmount: Number(currentTotal.toFixed(2)),
+            orderDate: new Date().toISOString().split('T')[0]
+        };
+
+        const response = await fetch(ORDERS_URL, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ordersPayload)
+        });
+
+        if (!response.ok) {
+            throw new Error("Failed checkout creation");
+        }
+
+        const newOrder = await response.json();
+        console.log('Order created', newOrder);
+        resetAll();
+    } catch (e) {
+        console.error('Error creating order', e);
+    }
+});
 
 function resetAll() {
     currentSubtotal = 0.00;
@@ -117,3 +142,4 @@ function resetAll() {
     totalDisplay.textContent = currentTotal.toFixed(2);
     displayArea.innerHTML = ``;
 }
+

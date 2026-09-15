@@ -21,21 +21,21 @@ public class DataInitialization implements CommandLineRunner {
             Products product1 = new Products();
             product1.setSku("COF-001");
             product1.setName("coffee");
-            product1.setDisplayname("House Coffee");
+            product1.setDisplayName("House Coffee");
             product1.setPrice(new java.math.BigDecimal("2.99"));
             product1.setQuantity(50);
 
             Products product2 = new Products();
             product2.setSku("TEA-001");
             product2.setName("tea");
-            product2.setDisplayname("Earl Grey Tea");
+            product2.setDisplayName("Earl Grey Tea");
             product2.setPrice(new java.math.BigDecimal("3.49"));
             product2.setQuantity(35);
 
             Products product3 = new Products();
             product3.setSku("MUF-001");
             product3.setName("muffin");
-            product3.setDisplayname("Blueberry Muffin");
+            product3.setDisplayName("Blueberry Muffin");
             product3.setPrice(new java.math.BigDecimal("4.25"));
             product3.setQuantity(20);
 

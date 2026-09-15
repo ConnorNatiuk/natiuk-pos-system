@@ -1,6 +1,7 @@
 package com.connor.pos.model;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,24 +12,18 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Products {
-
+public class Orders {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    private String sku;
-
-    @Column(nullable = false)
-    private String name;
-
-    @Column(nullable = false)
-    private String displayName;
-
-    @Column(nullable = false)
-    private BigDecimal price;
+    @Column
+    private Long customerId;
 
     @Column
-    private int quantity;
-}
+    private BigDecimal totalAmount;
+    
+    @Column
+    private Date orderDate;
+}   

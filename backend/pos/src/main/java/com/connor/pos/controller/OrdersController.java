@@ -12,41 +12,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.connor.pos.model.Products;
-import com.connor.pos.repository.ProductsRepository;
+import com.connor.pos.model.Orders;
+import com.connor.pos.repository.OrdersRepository;
 
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
+@RequestMapping("/api/orders")
+@CrossOrigin(origins="*")
 @RequiredArgsConstructor
-public class ProductsController {
+public class OrdersController {
 
-    private final ProductsRepository productsRepository;
+    private final OrdersRepository ordersRepository;
 
     @GetMapping
-    public List<Products> findAll() {
-        return productsRepository.findAll();
+    public List<Orders> findAll() {
+        return ordersRepository.findAll();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Products> findById(@PathVariable Long id) {
-        return productsRepository.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/sku/{sku}")
-    public ResponseEntity<Products> findBySku(@PathVariable String sku) {
-        return productsRepository.findBySku(sku)
+    public ResponseEntity<Orders> findById(@PathVariable Long id) {
+        return ordersRepository.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Products> createProduct(@RequestBody Products product) {
-        Products saved = productsRepository.save(product);
+    public ResponseEntity<Orders> createOrder(@RequestBody Orders order) {
+        Orders saved = ordersRepository.save(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(saved);
     }
+
 }
