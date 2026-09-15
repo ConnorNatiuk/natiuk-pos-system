@@ -1,8 +1,7 @@
-import { searchProduct } from './handleSearch.js';
-import { setupQuantityControls } from './quantityControls.js';
+import { searchProduct } from './api/handleSearch.js';
+import { setupQuantityControls } from './components/quantityControls.js';
 
 const API_URL = 'http://localhost:8080/api/products';
-
 
 let currentSubtotal = 0.00;
 let currentTax = 0.00;
